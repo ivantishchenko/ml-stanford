@@ -14,11 +14,14 @@ figure; hold on;
 
 
 
+neg = X(find(y == 0), :); % all zeros classified training examples
+pos = X(find(y == 1), :); % all ones classified training examples
 
+scatter(neg(:,1), neg(:,2), "r", "filled");
+scatter(pos(:,1), pos(:,2), "g", "filled");
 
-
-
-
+%names = {'Negative', 'Positive'};
+%legend(names);
 
 % =========================================================================
 
