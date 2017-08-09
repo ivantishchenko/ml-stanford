@@ -21,7 +21,23 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+bias_X = ones(size(X, 1), 1);
+bias_a = 1;
 
+X = [bias_X X];
+
+for i = 1:m
+	a1 = X(i, :)';
+
+	z2 = Theta1 * a1; % 25 x 1
+	a2 = sigmoid(z2);
+	a2 = [bias_a; a2];
+
+	z3 = Theta2 * a2;
+	h = sigmoid(z3);
+	[O index] = max(h);
+	p(i) = index;
+end
 
 
 
