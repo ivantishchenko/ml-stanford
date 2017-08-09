@@ -26,24 +26,31 @@ bias_a = 1;
 
 X = [bias_X X];
 
-for i = 1:m
-	a1 = X(i, :)';
+% Vec
+ 
+A = sigmoid(X * Theta1');
+bias = ones(size(A, 1), 1);
+A = [bias A];
 
-	z2 = Theta1 * a1; % 25 x 1
-	a2 = sigmoid(z2);
-	a2 = [bias_a; a2];
+H = sigmoid(A * Theta2');
 
-	z3 = Theta2 * a2;
-	h = sigmoid(z3);
-	[O index] = max(h);
-	p(i) = index;
-end
+[M p] = max(H, [], 2);
 
+% Endvec
 
 
-
-
-
+%for i = 1:m
+%	a1 = X(i, :)';
+%
+%	z2 = Theta1 * a1; % 25 x 1
+%	a2 = sigmoid(z2);
+%	a2 = [bias_a; a2];
+%
+%	z3 = Theta2 * a2;
+%	h = sigmoid(z3);
+%	[M index] = max(h);
+%	p(i) = index;
+%end
 
 % =========================================================================
 
