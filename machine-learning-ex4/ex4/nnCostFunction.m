@@ -83,6 +83,7 @@ H = sigmoid(A * Theta2'); % 5000 x 10; M * K
 % COST
 J = sum(sum(-Y .* log(H) - (1 - Y) .* log(1 - H), 2)) / m;
 
+J += (sum(sum(Theta1(:, 2:end) .^ 2, 2)) + sum(sum(Theta2(:, 2:end) .^ 2, 2))) * (lambda / (2 * m))
 % PART 2
 
 
