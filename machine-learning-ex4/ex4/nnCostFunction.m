@@ -62,21 +62,28 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+Y = zeros(m, num_labels); % 5000 x 10
 
+for i = 1:m,
+	Y(i, y(i)) = 1;	
+end
 
+% PART 1
 
+% Feedforward prop
+bias_X = ones(size(X, 1), 1);
+X = [bias_X X];
 
+A = sigmoid(X * Theta1');
+bias = ones(size(A, 1), 1);
+A = [bias A];
 
+H = sigmoid(A * Theta2'); % 5000 x 10; M * K
 
+% COST
+J = sum(sum(-Y .* log(H) - (1 - Y) .* log(1 - H), 2)) / m;
 
-
-
-
-
-
-
-
-
+% PART 2
 
 
 
