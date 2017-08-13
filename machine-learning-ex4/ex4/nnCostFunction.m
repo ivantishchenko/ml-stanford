@@ -71,22 +71,35 @@ end
 % PART 1
 
 % Feedforward prop
-bias_X = ones(size(X, 1), 1);
-X = [bias_X X];
+bias_X = ones(size(X, 1), 1); 
+A_1 = [bias_X X];  % 5000 * 400
 
-A = sigmoid(X * Theta1');
-bias = ones(size(A, 1), 1);
-A = [bias A];
+Z_2 = A_1 * Theta1';
 
-H = sigmoid(A * Theta2'); % 5000 x 10; M * K
+A_2 = sigmoid(Z_2); % 5000 x 25
+bias = ones(size(A_2, 1), 1);
+A_2 = [bias A_2]; 
+
+A_3 = sigmoid(A_2 * Theta2'); % 5000 x 10; M * K
+
+H = A_3;
 
 % COST
 J = sum(sum(-Y .* log(H) - (1 - Y) .* log(1 - H), 2)) / m;
 
 J += (sum(sum(Theta1(:, 2:end) .^ 2, 2)) + sum(sum(Theta2(:, 2:end) .^ 2, 2))) * (lambda / (2 * m))
+
 % PART 2
 
+Delta_3 = H - Y; % 5000 x 10
+Delta_2 = (Delta_3 * Theta2) .* [bias sigmoidGradient(Z_2)]; % 5000 x 26 and 5000 x 25 + 1
+Delta_2 = Delta_2(:, 2:end); %5000 x 25
 
+Theta1_grad += Delta_2' * A_1; % 5000 x 26 and 5000 x 400
+Theta2_grad += Delta_3' * A_2; % 5000 x 10 and 5000 x 25
+
+Theta1_grad /= m;
+Theta2_grad /= m;
 
 % -------------------------------------------------------------
 
