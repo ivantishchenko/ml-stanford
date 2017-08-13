@@ -91,6 +91,7 @@ J += (sum(sum(Theta1(:, 2:end) .^ 2, 2)) + sum(sum(Theta2(:, 2:end) .^ 2, 2))) *
 
 % PART 2
 
+% BACKPROP
 Delta_3 = H - Y; % 5000 x 10
 Delta_2 = (Delta_3 * Theta2) .* [bias sigmoidGradient(Z_2)]; % 5000 x 26 and 5000 x 25 + 1
 Delta_2 = Delta_2(:, 2:end); %5000 x 25
@@ -101,6 +102,11 @@ Theta2_grad += Delta_3' * A_2; % 5000 x 10 and 5000 x 25
 Theta1_grad /= m;
 Theta2_grad /= m;
 
+% PART 3 
+
+% Regularization
+Theta1_grad += [zeros(size(Theta1), 1) (lambda /  m) * Theta1(:, 2:end)];
+Theta2_grad += [zeros(size(Theta1), 1) (lambda /  m) * Theta2(:, 2:end)];
 % -------------------------------------------------------------
 
 % =========================================================================
