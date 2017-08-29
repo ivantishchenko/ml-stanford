@@ -42,7 +42,13 @@ Theta_grad = zeros(size(Theta));
 %M = X .* R(:, size(X, 2) - 1);
 %K = Y .* R;  
 filter = ((X * Theta' - Y) .* R);
-J = sum(sum(filter .^ 2 )) / 2;
+Theta_reg = (lambda / 2) * sum(sum(Theta .^ 2));
+X_reg = (lambda / 2) * sum(sum(X .^ 2));
+
+%Theta_reg = [zeros(size(Theta_reg, 1)) Theta_reg];
+%X_reg = [zeros(size(X_reg, 1)) X_reg];
+
+J = Theta_reg + X_reg + sum(sum(filter .^ 2 )) / 2;
 
 %X_grad = filter * Theta;
 %Theta_grad = filter' * X;
