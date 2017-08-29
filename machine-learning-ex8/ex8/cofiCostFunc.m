@@ -59,6 +59,7 @@ for i = 1:num_movies
   Y_tmp = Y(i, idx);
   
   X_grad(i, :) = (X(i, :) * Theta_tmp' - Y_tmp) * Theta_tmp;
+  % reg
 end
 
 for j = 1:num_users
@@ -68,12 +69,14 @@ for j = 1:num_users
   Y_tmp = Y(idx, j);
 
   Theta_grad(j, :) = (X_tmp * Theta(j, :)' - Y_tmp)' * X_tmp;
-  
+  % reg
   %idx = find(R(:, j) == 1);
   %X_tmp = X_tmp(idx, :);
   %Y_tmp = Y(idx, j);
   %Theta_grad(j, :) = (X(:, j) * Theta' - Y_tmp) * X(:, j);
 end
+X_grad += X * lambda;
+Theta_grad += Theta * lambda;
 
 %idx = find(R(1:num_movies, :) == 1);
 %heta_tmp = Theta(idx, :);
